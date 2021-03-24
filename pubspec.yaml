@@ -1,0 +1,47 @@
+name: blog
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.0
+  cached_network_image: ^2.3.3
+  dio: ^3.0.9
+  flutter_svg: 0.18.1
+  hive: ^1.4.2
+  hive_flutter: ^0.3.1
+  intl: ^0.16.1
+  provider: ^4.3.2+2
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.7.5
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/raster/logo.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/raster/
+    - assets/images/vector/
+
+  fonts:
+    - family: Bellota
+      fonts:
+        - asset: assets/fonts/Bellota-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Bellota-Regular.otf
+          weight: 500
+        - asset: assets/fonts/Bellota-Light.otf
