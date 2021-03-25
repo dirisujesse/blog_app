@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:blog/state/splash_state.dart';
 import 'package:flutter/material.dart';
 import 'package:blog/components/fragments/avatars/app_logo.dart';
-import 'package:blog/style/colors.dart';
 import 'package:blog/values/routes.dart';
 
 class SplashPage extends StatefulWidget {
@@ -32,17 +32,19 @@ class _SplashPageState extends State<SplashPage> {
   void _routingHandler(BuildContext context) {
     timer = Timer(
       Duration(seconds: 1),
-      () => Navigator.of(context).pushNamedAndRemoveUntil(
-        AppRoutes.blogs,
-        (_) => false,
-      ),
+      () {
+        final isLoggedIn = SplashState?.instance?.isLoggedIn ?? false;
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          isLoggedIn ? AppRoutes.blogs : AppRoutes.login,
+          (_) => false,
+        );
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.purple,
       body: Center(
         child: const AppLogo(
           key: Key("App_Logo"),

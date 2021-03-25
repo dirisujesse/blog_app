@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:blog/style/colors.dart';
 import 'package:blog/style/style.dart';
@@ -60,6 +59,36 @@ class AppThemes {
     iconTheme: base.iconTheme.copyWith(
       color: AppColors.black,
       size: 30,
+    ),
+    inputDecorationTheme: base.inputDecorationTheme.copyWith(
+      filled: false,
+      isDense: true,
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.purple,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      errorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.red,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      focusedErrorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.red,
+          width: 1.5,
+        ),
+      ),
+      disabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.purple.withOpacity(.3),
+        ),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: AppColors.purple, width: 1.5),
+      ),
     ),
   );
 }

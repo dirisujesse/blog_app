@@ -20,7 +20,7 @@ class AppButton extends StatelessWidget {
   AppButton({
     @required this.text,
     @required this.onPressed,
-    this.color = AppColors.green,
+    this.color = AppColors.purple,
     this.textColor = AppColors.white,
     this.disabledColor,
     this.isDense = false,

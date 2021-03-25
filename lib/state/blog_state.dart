@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart' show ChangeNotifier, ValueNotifier;
 import 'package:flutter/widgets.dart' show BuildContext, Navigator;
 
 import 'package:blog/models/config/app_config.dart';
-import 'package:blog/models/enums/screen_type.dart';
 import 'package:blog/models/http/response/app_response_models.dart';
 import 'package:blog/values/routes.dart';
 
@@ -18,7 +17,7 @@ class BlogState extends ChangeNotifier {
 
   ValueNotifier<Future<List<Blog>>> _blogsRef = ValueNotifier(null);
   ValueNotifier<Future<Blog>> _blogRef = ValueNotifier(null);
-  ValueNotifier<Blog> _selectedBlog = ValueNotifier(null);
+  Blog _selectedBlog;
 
   void resetState() {
     _blogRef.value = null;
@@ -36,50 +35,38 @@ class BlogState extends ChangeNotifier {
     return _instance;
   }
 
-  ValueNotifier<Blog> get selectedBlog {
+  Blog get selectedBlog {
     return _selectedBlog;
   }
 
   ValueNotifier<Future<List<Blog>>> get blogsRef {
     if (_blogsRef == null || _blogsRef.value == null) {
-      _blogsRef = ValueNotifier(_getBlogs());
+      _blogsRef = ValueNotifier(_service.getBlogs());
     }
     return _blogsRef;
   }
 
   ValueNotifier<Future<Blog>> get blogRef {
     if (_blogRef == null || _blogRef.value == null) {
-      _blogRef = ValueNotifier(_getBlog());
+      _blogRef = ValueNotifier(
+        _service.getBlogDetail(
+          _selectedBlog?.id ?? "",
+        ),
+      );
     }
     return _blogRef;
   }
 
-  getBlogDetail(Blog blog, {BuildContext context, ScreenType screenType}) {
-    _blogRef.value = _getBlog(id: blog.id);
-    _selectedBlog.value = blog;
-    Navigator.of(context).pushNamed(AppRoutes.blogDetail);
-  }
-
-  getBlogs({String query}) {
-    _blogsRef.value = _getBlogs();
-    _selectedBlog.value = null;
-  }
-
-  Future<List<Blog>> _getBlogs() async {
-    try {
-      final data = _service.getBlogs();
-      return data;
-    } catch (e) {
-      throw e;
+  getBlogDetail(Blog blog, {BuildContext context}) {
+    _blogRef.value = _service.getBlogDetail(blog.id);
+    _selectedBlog = blog;
+    if (context != null) {
+      Navigator.of(context).pushNamed(AppRoutes.blogDetail);
     }
   }
 
-  Future<Blog> _getBlog({String id}) async {
-    try {
-      final data = _service.getBlogDetail(id);
-      return data;
-    } catch (e) {
-      throw e;
-    }
+  getBlogs() {
+    _blogsRef.value = _service.getBlogs();
+    _selectedBlog = null;
   }
 }

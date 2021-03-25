@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 _parseAndDecode(String response) {
   return jsonDecode(response);
@@ -17,11 +16,9 @@ bool contains(String base, String comparator) =>
 
 String parseError(
   dynamic errorResponse,
-  String defaultMessage,
-  BuildContext context, [
+  String defaultMessage, [
   bool ignore401 = false,
 ]) {
-  print("xxxx: $errorResponse");
   try {
     final fallbackMessage = defaultMessage != null && defaultMessage.isNotEmpty
         ? defaultMessage
