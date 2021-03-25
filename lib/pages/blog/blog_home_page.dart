@@ -30,9 +30,7 @@ class BlogHomePage extends StatelessWidget {
             fontSize: 70,
           ),
         ),
-        actions: [
-          LogoutButton()
-        ],
+        actions: [LogoutButton()],
         centerTitle: true,
       ),
       body: ValueListenableBuilder(
@@ -43,23 +41,27 @@ class BlogHomePage extends StatelessWidget {
             builder: (context, AsyncSnapshot<List<Blog>> task) {
               if (task.connectionState == ConnectionState.waiting) return child;
               if (task.hasError) {
-                return AppErrorState(
-                  errorMessage: parseError(
-                    task.error,
-                    "Ooops an unexpected error occurred and blogs could not be fetched",
+                return Center(
+                  child: AppErrorState(
+                    errorMessage: parseError(
+                      task.error,
+                      "Ooops an unexpected error occurred and blogs could not be fetched",
+                    ),
+                    onRetry: () {
+                      model.getBlogs();
+                    },
                   ),
-                  onRetry: () {
-                    model.getBlogs();
-                  },
                 );
               }
               if (!task.hasData || (task?.data?.isEmpty ?? true)) {
-                return AppEmptyState(
-                  message: "No blogs were found at this time",
-                  subMessage: "Please refresh",
-                  onRetry: () {
-                    model.getBlogs();
-                  },
+                return Center(
+                  child: AppEmptyState(
+                    message: "No blogs were found at this time",
+                    subMessage: "Please refresh",
+                    onRetry: () {
+                      model.getBlogs();
+                    },
+                  ),
                 );
               }
               final data = task.data;

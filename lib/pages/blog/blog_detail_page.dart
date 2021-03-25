@@ -50,23 +50,27 @@ class BlogDetailView extends StatelessWidget {
             builder: (context, AsyncSnapshot<Blog> task) {
               if (task.connectionState == ConnectionState.waiting) return child;
               if (task.hasError) {
-                return AppErrorState(
-                  errorMessage: parseError(
-                    task.error,
-                    "Ooops an unexpected error occurred and blog details could not be fetched",
+                return Center(
+                  child: AppErrorState(
+                    errorMessage: parseError(
+                      task.error,
+                      "Ooops an unexpected error occurred and blog details could not be fetched",
+                    ),
+                    onRetry: () {
+                      model.getBlogDetail(model?.selectedBlog);
+                    },
                   ),
-                  onRetry: () {
-                    model.getBlogDetail(model?.selectedBlog);
-                  },
                 );
               }
               if (!task.hasData) {
-                return AppEmptyState(
-                  message: "Blog details could not be fetched at this time",
-                  subMessage: "Please refresh",
-                  onRetry: () {
-                    model.getBlogDetail(model?.selectedBlog);
-                  },
+                return Center(
+                  child: AppEmptyState(
+                    message: "Blog details could not be fetched at this time",
+                    subMessage: "Please refresh",
+                    onRetry: () {
+                      model.getBlogDetail(model?.selectedBlog);
+                    },
+                  ),
                 );
               }
               final data = task.data;
