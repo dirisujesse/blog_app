@@ -28,6 +28,7 @@ class AppEmptyState extends StatelessWidget {
     return Column(
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Icon(
           Icons.workspaces_outline,
